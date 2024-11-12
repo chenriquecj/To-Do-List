@@ -2,8 +2,17 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <limits>
 
 using namespace std;
+
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls"); // For Windows
+    #else
+        system("clear"); // For Linux and macOS
+    #endif
+}
 
 void showTasks(const std::vector<std::string> &tasks) {
     std::cout << "To-Do List:" << std::endl;
@@ -11,9 +20,14 @@ void showTasks(const std::vector<std::string> &tasks) {
     {
         std::cout << i + 1 << ". " << tasks[i] << std::endl;
     }
+
+    std::cout << "\nPress Enter to continue...";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 void readTasksFromFile(std::string filepath, std::vector<std::string> &tasks) {
+    std::string task;
+
     std::ifstream inputFile(filepath);
     while (getline(inputFile, task))
     {
@@ -32,14 +46,21 @@ void saveTasksAndClose(std::string filepath, std::vector<std::string> &tasks) {
 }
 
 void addTask(std::vector<std::string> &tasks){
+    std::string task;
 
     std::cout << "Enter a task: ";
     std::cin.ignore(); // Clears the input buffer
     getline(std::cin, task);
     tasks.push_back(task);
+
+    std::cout << "\nTask added succesfully!";
+    std::cout << "\nPress Enter to continue...";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-std::string task;
+void removeTask(std::vector<std::string> &tasks){
+
+}
 
 int main() {
 
@@ -49,8 +70,10 @@ int main() {
     readTasksFromFile("tasks.txt", tasks);
 
     do {
+        clearScreen();
         std::cout << "A - Add a task" << std::endl;
         std::cout << "V - View tasks" << std::endl;
+        std::cout << "R - Remove a task" << std::endl;
         std::cout << "Q - Quit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
@@ -62,8 +85,12 @@ int main() {
                 break;
             case 'v':
             case 'V':
+                std::cin.ignore();
                 showTasks(tasks);
                 break;
+            case 'r':
+            case 'R':
+                std::cout << "in development" << std::endl;
         }
 
     } while (choice != 'Q' && choice != 'q');
