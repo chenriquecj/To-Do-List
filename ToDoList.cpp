@@ -59,7 +59,19 @@ void addTask(std::vector<std::string> &tasks){
 }
 
 void removeTask(std::vector<std::string> &tasks){
+    int taskNumber;
+    showTasks(tasks);
+    std::cout << "Select the number of the task you wish to remove: ";
+    std::cin >> taskNumber;
 
+    if(taskNumber < tasks.size()){
+        tasks.erase(tasks.begin() + (taskNumber - 1));
+        std::cout << "Task number " << taskNumber << " removed successfully!" << std::endl;
+    } else {
+        std::cout << "Input number exceeds list size." << std::endl;
+    }
+    std::cout << "\nPress Enter to continue...";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 int main() {
@@ -90,7 +102,9 @@ int main() {
                 break;
             case 'r':
             case 'R':
-                std::cout << "in development" << std::endl;
+                std::cin.ignore();
+                removeTask(tasks);
+                break;
         }
 
     } while (choice != 'Q' && choice != 'q');
