@@ -20,9 +20,6 @@ void showTasks(const std::vector<std::string> &tasks) {
     {
         std::cout << i + 1 << ". " << tasks[i] << std::endl;
     }
-
-    std::cout << "\nPress Enter to continue...";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 void readTasksFromFile(std::string filepath, std::vector<std::string> &tasks) {
@@ -54,8 +51,6 @@ void addTask(std::vector<std::string> &tasks){
     tasks.push_back(task);
 
     std::cout << "\nTask added succesfully!";
-    std::cout << "\nPress Enter to continue...";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 void removeTask(std::vector<std::string> &tasks){
@@ -64,14 +59,12 @@ void removeTask(std::vector<std::string> &tasks){
     std::cout << "Select the number of the task you wish to remove: ";
     std::cin >> taskNumber;
 
-    if(taskNumber < tasks.size()){
+    if(taskNumber <= tasks.size()){
         tasks.erase(tasks.begin() + (taskNumber - 1));
         std::cout << "Task number " << taskNumber << " removed successfully!" << std::endl;
     } else {
         std::cout << "Input number exceeds list size." << std::endl;
     }
-    std::cout << "\nPress Enter to continue...";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 int main() {
@@ -106,6 +99,8 @@ int main() {
                 removeTask(tasks);
                 break;
         }
+        std::cout << "\nPress Enter to continue...";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     } while (choice != 'Q' && choice != 'q');
 
